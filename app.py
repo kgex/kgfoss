@@ -46,7 +46,7 @@ query = """
 
 """
 
-headers = {"Authorization": "Bearer xxx"}
+headers = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
 
 
 @app.route("/")
