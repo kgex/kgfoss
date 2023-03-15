@@ -1,0 +1,45 @@
+query {
+  user(login: "kgashok") {
+    name
+    bio
+    company
+    contributionsCollection {
+      totalIssueContributions
+      totalPullRequestContributions
+      totalCommitContributions
+      contributionCalendar {
+        colors
+        totalContributions
+        weeks {
+          contributionDays {
+            color
+            contributionCount
+            date
+            contributionLevel
+          }
+        }
+      }
+    }
+  }
+}
+
+query {
+  user(login: "kgashok") {
+    name
+    bio
+    company
+  }
+}
+
+query {
+  viewer {
+    pullRequests(first: 100, orderBy: { field: UPDATED_AT, direction: DESC }) {
+      nodes {
+        repository {
+          name
+          isPrivate
+        }
+      }
+    }
+  }
+}
