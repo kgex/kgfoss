@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Issues {% endblock %}</h1>
+
+{%for repository in issues%}
+{{repository.node.nameWithOwner}}<br>
+{{repository.node.id}}<br>
+{%for issue in repository.node.issues.edges%}
+{{issue.node.id}}<br>
+{{issue.node.bodyUrl}}<br>
+{%endfor%}
+{%endfor%}
+{% endblock %}
