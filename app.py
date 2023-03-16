@@ -100,6 +100,68 @@ def gitget():
         )
 
 
+@app.route("/issues", methods=["POST","GET"])
+def add_issues():
+    if not github.authorized:
+        return redirect(url_for('github.login'))
+    if request.method == "POST":
+        conn = get_db_connection()
+        cur = conn.cursor()
+        sql = """INSERT INTO UserIssues(issue_id,user_id,repo_id,status,created_at, updated_at) VALUES(%s,%s,%s,%s,%s,%s)"""
+        values = (request.form["issue_id"],request.form["user_id"],request.form["repo_id"],request.form["status"],request.form["created_at"],request.form["updated_at"])
+        cur.execute(sql,values)
+        conn.commit()
+        cur.close()
+        conn.close()
+        return redirect(url_for("index"))
+    gql_query="""query {
+  viewer{
+    repositories(isFork:true,first:10) {
+      totalCount
+      edges {
+        node {
+          id
+          name
+          url
+          parent {
+            id
+            nameWithOwner
+            issues(first:20,) {
+            edges {
+              node {
+                id
+                body
+                bodyUrl
+                assignees(first:10) {
+                  edges {
+                    node {
+                      id
+                      login
+                      isViewer
+                      name
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }   
+        }
+      }
+    }
+  }
+}
+
+    """
+    headers = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
+
+    response = requests.post("https://api.github.com/graphql", json= {"query":gql_query}, headers=headers)
+    if response.status_code == 200:
+        # return render_template("issues.html",issues=response.content)
+        return render_template("issues.html",issues=response.json()['data']['viewer']['repositories']['edges'])
+    return redirect(url_for("index"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
 
