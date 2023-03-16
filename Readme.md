@@ -50,11 +50,22 @@ pip install -r requirements.txt
 - Name it `UserIssues` and add the following fields
 ```
     issue id :varchar
-    userid :varchar
-    repo id : varchar
+    user_id :varchar
+    repo_id : varchar
     status : varchar
-    created_at : date
-    updated_at : date
+    created_at : timestampz (in utc)
+    updated_at : timestampz (in utc)
+```
+- Create another table named `Users` with the following fields
+```
+
+    roll_no : varchar
+    college : varchar
+    year : int2
+    dept : varchar
+    mobile : int2
+    email : int2
+
 ```
 ### DB Credentials
 
@@ -99,5 +110,18 @@ python app.py
 
 ``` 
 
+## Adding an OAuth app
 
+- click your avatar on the top right and go to `Settings`
+- Scroll down and click on `Developer Settings`
+- Click on `OAuth Apps` > `New OAuth App`
+- Enter any name for the name
+- For URL enter `http://127.0.0.1:5000`
+- For Callback URL enter `http://127.0.0.1:5000/github_login/github/authorized`
+- Click on `register` to finish creation of your OAuth app
+- Get your Client ID and Generate your Client Secret and add it to your .env file as
+```
+GITHUB_CLIENT_SECRET=client_secret
+GITHUB_CLIENT_ID=client_ID
+```
 
