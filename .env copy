@@ -1,4 +1,5 @@
-DB_USERNAME=xxx
-DB_PASSWORD=xxx
-DB_URL=xxx
-DB_DB=xxx
+DB_USERNAME=username
+DB_PASSWORD=password
+DB_URL=url
+DB_DB=name
+GITHUB_TOKEN=personal_access_token  
