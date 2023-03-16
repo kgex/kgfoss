@@ -4,6 +4,7 @@ from flask import Flask, render_template
 from dotenv import load_dotenv
 import graphene
 import requests
+import json
 
 load_dotenv()
 
@@ -29,24 +30,33 @@ query = """
 }
 """
 
+# changed
+
 query = """
-{
-  viewer {
-    pullRequests(first: 100, orderBy: {field: UPDATED_AT, direction: DESC}) {
-      nodes {
-        repository {
+  query {
+    user(login: "rakshitmehra") {
+      repositories(first: 50) {
+        nodes {
+          owner{
+            login
+          }
           name
-          isPrivate
+          description
+          createdAt
+          updatedAt
+          issues(first: 10, states: OPEN, orderBy: {field: UPDATED_AT, direction: DESC}) {
+            totalCount
+            nodes {
+              title
+            }
+          }
         }
       }
     }
-  }
 }
-
-
 """
 
-headers = {"Authorization": f"Bearer {os.environ['GITHUB_TOKEN']}"}
+headers = {"Authorization": "Bearer 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"}
 
 
 @app.route("/")
@@ -55,6 +65,7 @@ def index():
     cur = conn.cursor()
     cur.execute("SELECT * FROM books;")
     books = cur.fetchall()
+    print(books)
     cur.close()
     conn.close()
     return render_template("index.html", books=books)
@@ -73,6 +84,85 @@ def gitget():
                 request.status_code, query
             )
         )
+
+# changed
+
+@app.route("/git/repos")
+def gitRepos():
+  jsonItems = """
+  [{
+            "createdAt": "2022-07-09T21:23:49Z",
+            "description": null,
+            "issues": {
+              "nodes": [],
+              "totalCount": 0
+            },
+            "name": "Login-Register",
+            "owner": {
+              "login": "rakshitmehra"
+            },
+            "updatedAt": "2022-07-09T21:30:29Z"
+          },
+          {
+            "createdAt": "2022-07-17T15:57:34Z",
+            "description": null,
+            "issues": {
+              "nodes": [],
+              "totalCount": 0
+            },
+            "name": "Calculator",
+            "owner": {
+              "login": "rakshitmehra"
+            },
+            "updatedAt": "2022-07-17T17:12:52Z"
+          },
+          {
+            "createdAt": "2022-07-19T22:33:57Z",
+            "description": "This repository is to allow Hactoberfest 2022 participants to make PR's. This repository aims to help beginners \ud83e\udd14 with their first successful Pull Request and Open Source Contribution\ud83d\ude0a\ud83d\ude0a",
+            "issues": {
+              "nodes": [
+                {
+                  "title": "longest palindromic substring"
+                },
+                {
+                  "title": "[OpenCV] live sketch program"
+                },
+                {
+                  "title": "Summation of diagonal elements in CPP"
+                },
+                {
+                  "title": "Adding questions for Programming under Binary Trees Topic"
+                },
+                {
+                  "title": "Add any programs related to C++ or Java or Python in following folders"
+                },
+                {
+                  "title": "Put Atleast 30 questions Related to Programming"
+                },
+                {
+                  "title": "Make this Website Dynamic, So that We can put the questions directly, so that not changing the code again nd again."
+                },
+                {
+                  "title": "Adding animation"
+                },
+                {
+                  "title": "Adding Top Interview Questions"
+                },
+                {
+                  "title": "A try to laugh challenge webpage "
+                }
+              ],
+              "totalCount": 10
+            },
+            "name": "Quiz-application",
+            "owner": {
+              "login": "rakshitmehra"
+            },
+            "updatedAt": "2023-01-03T15:17:12Z"
+          }]
+  """
+  repo = json.loads(jsonItems)
+  return render_template("Repos.html",repos=repo)
 
 
 if __name__ == "__main__":

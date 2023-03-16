@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Repos {% endblock %}</h1>
+
+{% for repo in repos %}
+<div class='book'>
+    <h3>{{ loop.index }} ) - {{ repo['name'] }} BY {{ repo['owner']['login'] }}</h3>
+    <i>
+        <p>issue Count - {{ repo['issues']['totalCount'] }}</p>
+    </i>
+    <p class='review'>{{ repo[4] }}</p>
+    <i>
+        <p>Created at {{ repo['createdAt'] }}</p>
+        <p>Updated at {{ repo['updatedAt'] }}</p>
+    </i>
+</div>
+{% endfor %}
+{% endblock %}
