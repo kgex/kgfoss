@@ -2,4 +2,6 @@ DB_USERNAME=username
 DB_PASSWORD=password
 DB_URL=url
 DB_DB=name
-GITHUB_TOKEN=personal_access_token  
+GITHUB_TOKEN=personal_access_token 
+GITHUB_CLIENT_SECRET=client_secret
+GITHUB_CLIENT_ID=client_ID

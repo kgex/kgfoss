@@ -1,14 +1,21 @@
 import os
 import psycopg2
-from flask import Flask, render_template
 from dotenv import load_dotenv
 import graphene
 import requests
-
+from flask import Flask,render_template,url_for,request,redirect, make_response
+from flask_dance.contrib.github import make_github_blueprint, github
+from flask_login import logout_user
 load_dotenv()
 
 
 app = Flask(__name__)
+app.config["SECRET_KEY"]="abcde"
+os.environ['OAUTHLIB_INSECURE_TRANSPORT'] = '1'
+github_blueprint = make_github_blueprint(client_id=os.environ['GITHUB_CLIENT_ID'],
+                                         client_secret=os.environ['GITHUB_CLIENT_SECRET'])
+
+app.register_blueprint(github_blueprint, url_prefix='/github_login')
 
 
 def get_db_connection():
@@ -58,7 +65,25 @@ def index():
     cur.close()
     conn.close()
     return render_template("index.html", books=books)
+@app.route('/login')
+def github_login():
 
+    if not github.authorized:
+        return redirect(url_for('github.login'))
+    else:
+        account_info = github.get('/user')
+        if account_info.ok:
+            account_info_json = account_info.json()
+            print(account_info_json)
+            return '<h1>Your Github name is {}'.format(account_info_json['login'])
+
+    return '<h1>Request failed!</h1>'
+
+@app.route("/logout")
+def github_logout():
+    del github_blueprint.token
+    # print(github_blueprint.token)
+    return 'logged out'
 
 @app.route("/git")
 def gitget():
