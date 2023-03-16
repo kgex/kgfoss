@@ -43,3 +43,21 @@ query {
     }
   }
 }
+{
+  repository(name: "kgfoss", owner: "kgex") {
+    issue1: issue(number: 5) {
+      title
+      comments(first: 10,orderBy: {field:UPDATED_AT,direction:DESC}) {
+        edges {
+          node {
+            id
+            body
+            author {
+              login
+            }
+          }
+        }
+      }
+    }
+  }
+}
