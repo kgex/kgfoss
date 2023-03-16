@@ -30,33 +30,38 @@ query = """
 }
 """
 
-# changed
+# filted repo using tags
 
 query = """
   query {
-    user(login: "rakshitmehra") {
-      repositories(first: 50) {
-        nodes {
-          owner{
-            login
-          }
-          name
-          description
-          createdAt
-          updatedAt
-          issues(first: 10, states: OPEN, orderBy: {field: UPDATED_AT, direction: DESC}) {
-            totalCount
-            nodes {
-              title
-            }
+  user(login: "rakshitmehra") {
+    repositories(first: 50) {
+      nodes {
+        owner {
+          login
+        }
+        name
+        description
+        createdAt
+        updatedAt
+        issues(
+          first: 10
+          states: OPEN
+          orderBy: {field: UPDATED_AT, direction: DESC}
+          labels: ["good first issue","kg foss"]
+        ) {
+          totalCount
+          nodes {
+            title
           }
         }
       }
     }
+  }
 }
 """
 
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer API_HERE"}
 
 
 @app.route("/")
