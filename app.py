@@ -89,6 +89,7 @@ GITHUB_AUTH_TOKEN = os.environ["GITHUB_AUTH_TOKEN"]
 headers = {"Authorization": "Bearer " + GITHUB_AUTH_TOKEN }
 
 
+
 @app.route("/")
 def index():
     conn = get_db_connection()
