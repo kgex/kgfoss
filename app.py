@@ -89,7 +89,6 @@ GITHUB_AUTH_TOKEN = os.environ["GITHUB_AUTH_TOKEN"]
 headers = {"Authorization": "Bearer " + GITHUB_AUTH_TOKEN }
 
 
-
 @app.route("/")
 def index():
     conn = get_db_connection()
@@ -318,7 +317,7 @@ def lederboard():
 query {
   user1: user(login: "PranikaBaby") {
     name
-    pullRequests(last: 10, orderBy: {field: UPDATED_AT, direction: DESC}) {
+    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
       nodes {
         title
         url
@@ -333,7 +332,7 @@ query {
   
   user2: user(login: "RSDeenu123") {
     name
-    pullRequests(last: 10, orderBy: {field: UPDATED_AT, direction: DESC}) {
+    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
       nodes {
         title
         url
