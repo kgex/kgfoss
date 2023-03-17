@@ -36,16 +36,17 @@
 
     $(document).ready(function () {
         $('#example').DataTable({
+                        order: [[5, 'desc']],
+
             data: data,
              columns: [
-                { data: 'mergedAt' },
-                { data: 'mergedAt' },
-                { data: 'mergedAt' },
-                { data: 'mergedAt' },
-                { data: 'mergedAt' },
-                { data: 'title' },
+                { data: 'name' },
+                { data: 'name' },
+                { data: 'name' },
+                { data: 'name' },
+                { data: 'name' },
+                { data: 'nodes' },
             ],
-
             
         });
     });

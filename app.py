@@ -6,6 +6,7 @@ import requests
 from flask import Flask,render_template,url_for,request,redirect, make_response, json
 from flask_dance.contrib.github import make_github_blueprint, github
 from flask_login import logout_user
+from datetime import datetime, timedelta
 
 load_dotenv()
 
@@ -86,7 +87,6 @@ query_to_issues = """
 GITHUB_AUTH_TOKEN = os.environ["GITHUB_AUTH_TOKEN"]
 
 headers = {"Authorization": "Bearer " + GITHUB_AUTH_TOKEN }
-
 
 
 @app.route("/")
@@ -271,8 +271,8 @@ def gitRepos():
   return render_template("Repos.html",repos=repo)
 
 
-@app.route('/leaderboard')
-def lederboard():
+@app.route('/leaderboard2')
+def lederboard2():
     query_to_leaderboard = """
     {
   repository(owner: "kgex", name: "kgfoss") {
@@ -302,7 +302,6 @@ def lederboard():
     data = json.dumps( [1.0,2.0,3.0] )
 
     if request.status_code == 200:
-        print(request._content)
         return render_template("leaderboard.html",data=request.json()['data']['repository']['pullRequests']['nodes'])
     else:
         raise Exception(
@@ -310,6 +309,149 @@ def lederboard():
                 request.status_code, query
             )
         )
+    
+
+@app.route('/leaderboard')
+def lederboard():
+    query_to_leaderboard = """
+query {
+  user1: user(login: "PranikaBaby") {
+    name
+    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user2: user(login: "RSDeenu123") {
+    name
+    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user3: user(login: "Anand934") {
+    name
+    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+}
+      """
+    request = requests.post(
+        "https://api.github.com/graphql", json={"query": query_to_leaderboard}, headers=headers
+    )
+
+    data = json.dumps( [1.0,2.0,3.0] )
+
+    if request.status_code == 200:
+        resp = request.json()['data']
+        data = []
+        for key in resp.keys():
+            name = resp[key]['name']
+            nodes = len(resp[key]['pullRequests']['nodes'])
+            data.append({"name": name, "nodes": nodes})
+        return render_template("leaderboard2.html",data=data)
+    else:
+        raise Exception(
+            "Query failed to run by returning code of {}. {}".format(
+                request.status_code, query
+            )
+        )
+    
+CONTRIBUTORS = ["nivu", "PranikaBaby", "nivu", "nivu"]
+
+
+QUERY = """
+query ($userLogins:[String!]!, $since:DateTime!, $after:String) {
+  search(query: "is:pr is:merged author:{userLogins} merged:>{since} state:closed", type: ISSUE, first: 100, after: $after) {
+    edges {
+      cursor
+      node {
+        ... on PullRequest {
+          author {
+            login
+          }
+          repository {
+            nameWithOwner
+          }
+          mergedAt
+        }
+      }
+    }
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+  }
+}
+"""
+
+
+def run_query(query, variables):
+    # headers = {"Authorization": f"Bearer {API_TOKEN}"}
+    response = requests.post("https://api.github.com/graphql", json={"query": query, "variables": variables}, headers=headers)
+    if response.status_code == 200:
+        return json.loads(response.text)
+    else:
+        raise Exception(f"Query failed to run: {response.text}")
+
+@app.route("/leader")
+def leader():
+    # Calculate the start date for the query
+    since = datetime.now() - timedelta(days=2)
+    
+    # Retrieve pull requests from the GitHub GraphQL API for each contributor
+    pr_counts = {contributor: 0 for contributor in CONTRIBUTORS}
+    for contributor in CONTRIBUTORS:
+        end_cursor = None
+        while True:
+            query = QUERY % (",".join([f'"{contributor}"']), since.strftime("%Y-%m-%dT%H:%M:%SZ"), end_cursor)
+            result = run_query(query, {})
+            pulls = result["data"]["search"]["edges"]
+            
+            # Count the number of successful pull request merges by the contributor
+            for pull in pulls:
+                if pull["node"]["author"] and pull["node"]["author"]["login"] == contributor and pull["node"]["mergedAt"] is not None:
+                    pr_counts[contributor] += 1
+            
+            # Check if there are more results to retrieve
+            if result["data"]["search"]["pageInfo"]["hasNextPage"]:
+                end_cursor = result["data"]["search"]["pageInfo"]["endCursor"]
+            else:
+                break
+    
+    # Sort contributors by number of successful pull request merges
+    sorted_contributors = sorted(pr_counts, key=pr_counts.get, reverse=True)
+    
+    # Create a list of (username, successful_pr_merge_count) tuples for the top 4 contributors
+    leaderboard = [(contributor, pr_counts[contributor]) for contributor in sorted_contributors[:4]]
+    
+    # Render the leaderboard template with the leaderboard data
+    return render_template("leader.html", leaderboard=leaderboard)
 
 
 if __name__ == "__main__":
