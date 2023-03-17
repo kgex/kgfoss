@@ -1,0 +1,47 @@
+query {
+  user1: user(login: "PranikaBaby") {
+    name
+    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user2: user(login: "RSDeenu123") {
+    name
+    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user3: user(login: "Anand934") {
+    name
+    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+}
+      

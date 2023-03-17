@@ -309,74 +309,56 @@ def lederboard2():
                 request.status_code, query
             )
         )
+
+# usersz = ["Brijesh-m-14", "Ashwin-d-27", "GnanaChandruKR", "Thanush2412", "ELAKIYA-SEKAR", "vasanthakumar2004", "AkshayaVarshieni14", "JasferI", "vikrantvikaasa27"]
+
+usersz = ["nivu", "spikeysanju", "Brijesh-m-14"]
+queries = []
+
+for i, use in enumerate(usersz):
+    print(use)
+    query = f'''
+    user{i}: user(login: "{use}") {{
+      name
+      pullRequests(last: 10, states: MERGED, orderBy: {{field: UPDATED_AT, direction: DESC}}) {{
+        nodes {{
+          title
+          url
+          state
+          updatedAt
+          repository {{
+            nameWithOwner
+          }}
+        }}
+      }}
+    }}
+    '''
+    queries.append(query)
+print(len(queries))
+print(queries)
+
+graphql_query = "query {" + "\n".join(queries) + "}"
     
+print(graphql_query)
 
 @app.route('/leaderboard')
 def lederboard():
-    query_to_leaderboard = """
-query {
-  user1: user(login: "PranikaBaby") {
-    name
-    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
-      nodes {
-        title
-        url
-        state
-        updatedAt
-        repository {
-          nameWithOwner
-        }
-      }
-    }
-  }
-  
-  user2: user(login: "RSDeenu123") {
-    name
-    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
-      nodes {
-        title
-        url
-        state
-        updatedAt
-        repository {
-          nameWithOwner
-        }
-      }
-    }
-  }
-  
-  user3: user(login: "Anand934") {
-    name
-    pullRequests(last: 10, states:MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
-      nodes {
-        title
-        url
-        state
-        updatedAt
-        repository {
-          nameWithOwner
-        }
-      }
-    }
-  }
-}
-      """
     request = requests.post(
-        "https://api.github.com/graphql", json={"query": query_to_leaderboard}, headers=headers
+        "https://api.github.com/graphql", json={"query": graphql_query}, headers=headers
     )
-
-    data = json.dumps( [1.0,2.0,3.0] )
 
     if request.status_code == 200:
         resp = request.json()['data']
         data = []
-        print(resp)
         for key in resp.keys():
             if resp[key] != None:
               name = resp[key]['name']
               nodes = len(resp[key]['pullRequests']['nodes'])
-              data.append({"name": name, "nodes": nodes})
-        return render_template("leaderboard2.html",data=data)
+              prs = []
+              for pr in resp[key]['pullRequests']['nodes']:
+                  prs.append(pr['title'])
+              data.append({"name": name, "nodes": nodes, "prs": prs})
+        return render_template("realboard.html",data=data)
     else:
         raise Exception(
             "Query failed to run by returning code of {}. {}".format(

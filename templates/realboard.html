@@ -6,22 +6,16 @@
 <table id="example" class="display" style="width:100%">
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Extn.</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>User Name</th>
+            <th>PR List</th>
+            <th>No. of PRs</th>
         </tr>
     </thead>
     <tfoot>
         <tr>
-            <th>Name</th>
-            <th>Position</th>
-            <th>Office</th>
-            <th>Extn.</th>
-            <th>Start date</th>
-            <th>Salary</th>
+            <th>User Name</th>
+            <th>PR List</th>
+            <th>No. of PRs</th>
         </tr>
     </tfoot>
 </table>
@@ -36,15 +30,12 @@
 
     $(document).ready(function () {
         $('#example').DataTable({
-                        order: [[5, 'desc']],
-
+            order: [[2, 'desc']],
+            "pageLength": 150,
             data: data,
              columns: [
                 { data: 'name' },
-                { data: 'name' },
-                { data: 'name' },
-                { data: 'name' },
-                { data: 'name' },
+                { data: 'prs[,]' },
                 { data: 'nodes' },
             ],
             
