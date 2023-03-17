@@ -1,0 +1,17 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>GitHub Pull Request Leaderboard</title>
+</head>
+
+<body>
+    <h1>GitHub Pull Request Leaderboard</h1>
+    <ol>
+        {% for contributor, pr_count in leaderboard %}
+        <li>{{ contributor }} - {{ pr_count }} pull requests</li>
+        {% endfor %}
+    </ol>
+</body>
+
+</html>
