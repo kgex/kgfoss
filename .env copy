@@ -5,3 +5,5 @@ DB_DB=name
 GITHUB_TOKEN=personal_access_token 
 GITHUB_CLIENT_SECRET=client_secret
 GITHUB_CLIENT_ID=client_ID
+
+GITHUB_AUTH_TOKEN
