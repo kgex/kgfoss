@@ -312,11 +312,11 @@ def lederboard2():
 
 # usersz = ["Brijesh-m-14", "Ashwin-d-27", "GnanaChandruKR", "Thanush2412", "ELAKIYA-SEKAR", "vasanthakumar2004", "AkshayaVarshieni14", "JasferI", "vikrantvikaasa27"]
 
-usersz = ["nivu", "spikeysanju", "Brijesh-m-14"]
+usersz = ["Brijesh-m-14","Ashwin-d-27","GnanaChandruKR","Thanush2412","ELAKIYA-SEKAR","vasanthakumar2004","AkshayaVarshieni14","JasferI","vikrantvikaasa27","Anand934","Rohithvasan2871","SarathSjr","markjacksonj","CiRiLj","Aakash158","haridarsan01","Rathnapraba","Mathew1327","MOHAMEDTHABITH","fazmila-fathima","B-a-b-u","Deenadayalan3","naveenmac7","jayandhan007","KNVIKRAM","Elamathiselvan","vikashmurugesh","Adhi2407","RACKSAN","IniyalPalanisamy","ManjusriArumugam","HariHaran1214","Harikrish360","karthickraja-shanmugaguru","sabareeshwaran-sureshkumar","gnana angelin s","RSDeenu123","Sudharshini Jothikumar","Sudharshini Jothikumar","Lakshmiprabha14","GnanaAngelinS","JubileeTitusJM","HarisNihaal","shyamkumar05","sreelekha2272003","sudheesanamp2003","deva209","SwethaSathish1027","ArunKarthick2021","Dharsan12","Alwin7704","hariprasanth05","Kowsalyasriganesh","dayanithi400","Veeshavanachu","Manojkumar192002","sk-vishal-28","Aishu-5","RaghulVishal0604","VijayaDharshini Sivalkumar","PranikaBaby","hariprasanth05","yuvan-s-96","sanjeevidev","JJanany","jeban-2003","vardhinisundar09@gmail.com","Saanthosh24","gobalakrishnan21cb17","SivaRamana-H-V","Thejeswini-V","lavanya787","Rakesh-B-2003","JeyaSuryaRavi","KalaiKathir-SJ","Sidharth Babu","DeenuRSD","Manojkumardheenadhayalan","sridevithanigai","umar120044","santhoshkannan5206","sankaraxi","Natheesh-N"]
 queries = []
+print(len(usersz))
 
 for i, use in enumerate(usersz):
-    print(use)
     query = f'''
     user{i}: user(login: "{use}") {{
       name
@@ -335,7 +335,6 @@ for i, use in enumerate(usersz):
     '''
     queries.append(query)
 print(len(queries))
-print(queries)
 
 graphql_query = "query {" + "\n".join(queries) + "}"
     
