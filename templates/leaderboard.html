@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{% block title %} Books {% endblock %}</h1>
+
+<table id="example" class="display" style="width:100%">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Extn.</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </thead>
+    <tfoot>
+        <tr>
+            <th>Name</th>
+            <th>Position</th>
+            <th>Office</th>
+            <th>Extn.</th>
+            <th>Start date</th>
+            <th>Salary</th>
+        </tr>
+    </tfoot>
+</table>
+
+{% block javascript %}
+
+<script>
+
+
+    data = {{data | tojson }}
+    console.log(data)
+
+    $(document).ready(function () {
+        $('#example').DataTable({
+            data: data,
+             columns: [
+                { data: 'mergedAt' },
+                { data: 'mergedAt' },
+                { data: 'mergedAt' },
+                { data: 'mergedAt' },
+                { data: 'mergedAt' },
+                { data: 'title' },
+            ],
+            
+        });
+    });
+</script>
+{% endblock %}
+
+{% endblock %}

@@ -1,7 +1,7 @@
-DB_USERNAME=username
-DB_PASSWORD=password
-DB_URL=url
-DB_DB=name
-GITHUB_TOKEN=personal_access_token 
-GITHUB_CLIENT_SECRET=client_secret
-GITHUB_CLIENT_ID=client_ID
+DB_USERNAME=postgres
+DB_PASSWORD="rootFOSS#09"
+DB_URL=db.waslqbqwqjdfeghejcsw.supabase.co
+DB_DB=postgres
+GITHUB_TOKEN=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
+GITHUB_CLIENT_SECRET=d7288716cbea82f31d183bb20ede63f96dd54b07
+GITHUB_CLIENT_ID=849edc2e8101ace93191
