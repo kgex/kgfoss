@@ -370,10 +370,12 @@ query {
     if request.status_code == 200:
         resp = request.json()['data']
         data = []
+        print(resp)
         for key in resp.keys():
-            name = resp[key]['name']
-            nodes = len(resp[key]['pullRequests']['nodes'])
-            data.append({"name": name, "nodes": nodes})
+            if resp[key] != None:
+              name = resp[key]['name']
+              nodes = len(resp[key]['pullRequests']['nodes'])
+              data.append({"name": name, "nodes": nodes})
         return render_template("leaderboard2.html",data=data)
     else:
         raise Exception(
