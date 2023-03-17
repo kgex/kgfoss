@@ -88,7 +88,6 @@ GITHUB_AUTH_TOKEN = os.environ["GITHUB_AUTH_TOKEN"]
 headers = {"Authorization": "Bearer " + GITHUB_AUTH_TOKEN }
 
 
-
 @app.route("/")
 def index():
     conn = get_db_connection()
@@ -302,7 +301,6 @@ def lederboard():
     data = json.dumps( [1.0,2.0,3.0] )
 
     if request.status_code == 200:
-        print(request._content)
         return render_template("leaderboard.html",data=request.json()['data']['repository']['pullRequests']['nodes'])
     else:
         raise Exception(
