@@ -85,7 +85,7 @@ query_to_issues = """
 }
 """
 
-headers = {"Authorization": "Bearer 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"}
+headers = {"Authorization": "Bearer {os.environ['GITHUB_AUTH_TOKEN']}"}
 
 
 @app.route("/")
