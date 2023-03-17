@@ -1,0 +1,257 @@
+query {
+  user1: user(login: "Brijesh-m-14") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user2: user(login: "Ashwin-d-27") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user3: user(login: "GnanaChandruKR") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user4: user(login: "Thanush2412") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user5: user(login: "ELAKIYA-SEKAR") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user6: user(login: "vasanthakumar2004") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user7: user(login: "AkshayaVarshieni14") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user8: user(login: "JasferI") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user9: user(login: "vikrantvikaasa27") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user10: user(login: "Anand934") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user11: user(login: "Rohithvasan2871") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user13: user(login: "SarathSjr") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user14: user(login: "markjacksonj") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user15: user(login: "CiRiLj") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user16: user(login: "Aakash158") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+  
+  user17: user(login: "haridarsan01") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+  user18: user(login: "Rathnapraba") {
+    name
+    pullRequests(last: 10, states: MERGED, orderBy: {field: UPDATED_AT, direction: DESC}) {
+      nodes {
+        title
+        url
+        state
+        updatedAt
+        repository {
+          nameWithOwner
+        }
+      }
+    }
+  }
+
+}
